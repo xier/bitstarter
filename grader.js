@@ -29,7 +29,7 @@ var rest = require('restler');
 var HTMLFILE_DEFAULT = "index.html";
 var CHECKSFILE_DEFAULT = "checks.json";
 
-var URL_DEFAULT = "http://secure-brook-1911.herokuapp.com";
+var URL_DEFAULT = "http://dry-coast-6713.herokuapp.com/";
 
 var callThis = function(result) {
     if(data instanceof Error) {
@@ -101,6 +101,7 @@ if(require.main == module) {
     var checkJson = checkUrl(program.file, program.checks);
     var outJson = JSON.stringify(checkJson, null, 4);
     console.log(outJson);
+});
 } else {
      var checkJson = checkHtmlFile(result, program.checks);
     var outJson = JSON.stringify(checkJson, null, 4);
