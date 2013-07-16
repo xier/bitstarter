@@ -28,8 +28,7 @@ var sys = require('util');
 var rest = require('restler');
 var HTMLFILE_DEFAULT = "index.html";
 var CHECKSFILE_DEFAULT = "checks.json";
-
-var URL_DEFAULT = "http://dry-coast-6713.herokuapp.com/";
+var URL_DEFAULT = "http://dry-coast-6713.herokuapp.com";
 
 var callThis = function(result) {
     if(data instanceof Error) {
@@ -97,13 +96,17 @@ if(require.main == module) {
     program
         .option('-c, --checks <check_file>', 'Path to checks.json', clone(assertFileExists), CHECKSFILE_DEFAULT)
         .option('-f, --file <html_file>', 'Path to index.html', clone(assertFileExists), HTMLFILE_DEFAULT)
+    .option('-u, --url <url>', 'url to check', clone(assertUrlExists), URL_DEFAULT)
         .parse(process.argv);
-    var checkJson = checkUrl(program.file, program.checks);
+ if(program.url) {
+     rest.get(program.url).on('complete', function(result) {
+    var checkJson = checkUrl(result, program.checks);
     var outJson = JSON.stringify(checkJson, null, 4);
     console.log(outJson);
-
+});
 } else {
      var checkJson = checkHtmlFile(result, program.checks);
     var outJson = JSON.stringify(checkJson, null, 4);
    console.log(outJson);
+}
 }
